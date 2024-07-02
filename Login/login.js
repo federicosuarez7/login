@@ -29,4 +29,18 @@ document.addEventListener('DOMContentLoaded',function () {
     confirmPasswordInput.addEventListener('change',function(){
         
     })
+
+    function validateForm() {
+        
+    }
+    function validateEmail() {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$;
+        // eliminamos los espacios vacios y guardamos la entrada en una constante
+        const emailValue = emailInput.ariaValueMax.trim();
+        if (!emailRegex.test(emailValue)) {
+            return false;
+        }
+        return true;
+
+    }
 });
