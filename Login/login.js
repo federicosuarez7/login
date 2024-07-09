@@ -6,41 +6,78 @@ document.addEventListener('DOMContentLoaded',function () {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const confirmPasswordError = document.getElementById('confirmPasswordError');
+    const passwordError = document.getElementById('errorPassword');
+    const confirmPasswordError = document.getElementById('errorConfirmPassword');
 
 // Metodo que valida el formulario
     loginForm.addEventListener('submit',function(event) {
         event.preventDefault();
+        validateForm();
     })
 // Metodo que valida el mail
     emailInput.addEventListener('blur',function(){
-
+        validateEmail();
     })
 // Metodo que limpia el error cuando se vuelva a escribir en el input del mail
     emailInput.addEventListener('change',function(){
-        
+        clearError(emailError);
     })
 // Metodo que limpia el error cuando se vuelva a escribir en el input del password
     passwordInput.addEventListener('change',function(){
-        
+        clearError(passwordError);
     })
 // Metodo que limpia el error cuando se vuelva a escribir en el input del confirm password
     confirmPasswordInput.addEventListener('change',function(){
-        
+        clearError(confirmPasswordError);
     })
 
     function validateForm() {
-        
+        const isValidEmail = validateEmail();
+        const isValidPassword = validatePassword();
+        const passwordMatch = validatePasswordMatch();
+        if (isValidEmail && isValidPassword &&passwordMatch) {
+            // guardar mail en local storage y generar un json en console
+            alert('Has ingresado con exito');
+        }
     }
     function validateEmail() {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         // eliminamos los espacios vacios y guardamos la entrada en una constante
-        const emailValue = emailInput.ariaValueMax.trim();
+        const emailValue = emailInput.value.trim();
         if (!emailRegex.test(emailValue)) {
+            showError(emailError,'Ingresa un email valido');
             return false;
         }
         return true;
-
     }
+    function validatePassword() {
+        const passwordValue = passwordInput.value.trim();
+
+        if (passwordValue.length <6) {
+        showError(passwordError,'Ingresa una contraseña de al menos 6 caracteres');
+        return false;
+        }
+        return true;
+    }
+    function validatePasswordMatch() {
+        const passwordValue = passwordInput.value.trim();
+        const confirmPasswordValue = confirmPasswordInput.value.trim();
+        if (passwordValue != confirmPasswordValue) {
+            showError(confirmPasswordError,'Las contraseñas no coinciden');
+            return false;
+        }
+        return true;
+    }
+
+    function showError(errorElement,message) {
+        errorElement.innerHTML = message;
+        errorElement.style.display = 'block';
+    }
+
+    function clearError(errorElement) {
+        errorElement.innerHTML = '';
+        errorElement.style.display = 'none';
+    }
+
+
 });
