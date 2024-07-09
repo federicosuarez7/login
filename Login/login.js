@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded',function () {
         const isValidPassword = validatePassword();
         const passwordMatch = validatePasswordMatch();
         if (isValidEmail && isValidPassword &&passwordMatch) {
-            // guardar mail en local storage y generar un json en console
+            saveToLocalStorage();
             alert('Has ingresado con exito');
         }
     }
@@ -77,6 +77,20 @@ document.addEventListener('DOMContentLoaded',function () {
     function clearError(errorElement) {
         errorElement.innerHTML = '';
         errorElement.style.display = 'none';
+    }
+
+    function saveToLocalStorage() {
+        const emailValue = emailInput.value.trim();
+        localStorage.setItem('email',emailValue);
+        const body = bodyBuilderJSON();
+        console.log(body);
+    }
+
+    function bodyBuilderJSON(){
+        return {
+            "email": emailInput.value,
+            "password": passwordInput.value
+        }
     }
 
 
