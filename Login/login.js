@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded',function () {
     const emailError = document.getElementById('emailError');
     const passwordError = document.getElementById('errorPassword');
     const confirmPasswordError = document.getElementById('errorConfirmPassword');
+    const showHideButton = document.getElementById('show-hide');
 
 // Metodo que valida el formulario
     loginForm.addEventListener('submit',function(event) {
@@ -29,6 +30,16 @@ document.addEventListener('DOMContentLoaded',function () {
 // Metodo que limpia el error cuando se vuelva a escribir en el input del confirm password
     confirmPasswordInput.addEventListener('change',function(){
         clearError(confirmPasswordError);
+    })
+
+    showHideButton.addEventListener('click',function (){
+        if (passwordInput.type == 'password') {
+            passwordInput.type = 'text';
+            confirmPasswordInput.type = 'text'
+        }else{
+            passwordInput.type = 'password';
+            confirmPasswordInput.type = 'password'
+        }
     })
 
     function validateForm() {
